@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💘</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffe6eb, #fff0f5);
+  font-family: 'Comic Sans MS', cursive;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  bottom: -50px;
+  font-size: 24px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* Main card */
+.card {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+h1 {
+  color: #ff4d6d;
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+/* Teddy animation */
+.teddy {
+  font-size: 80px;
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+button {
+  padding: 14px 22px;
+  font-size: 18px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#yesBtn {
+  background: #4CAF50;
+  color: white;
+}
+
+#noBtn {
+  background: #ff4d4d;
+  color: white;
+}
+
+/* Final screen */
+.final {
+  font-size: 24px;
+  color: #ff4d6d;
+}
+
+.big-heart {
+  background: #ff4d6d;
+  color: white;
+  font-size: 26px;
+  padding: 22px 35px;
+  border-radius: 50px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="main">
+  <div class="teddy">🧸</div>
+  <h1>Will you be my Valentine? 💌</h1>
+
+  <div class="buttons">
+    <button id="yesBtn" onclick="yesClicked()">Yes</button>
+    <button id="noBtn" onclick="noClicked()">No</button>
+  </div>
+</div>
+
+<script>
+let noClicks = 0;
+
+const noTexts = [
+  "Are you sure?",
+  "Really sure?",
+  "Think again",
+  "Last chance",
+  "You're gonna regret it",
+  "Huge mistake 😬",
+  "Don't be cold",
+  "You're breaking my heart 💔",
+  "I will stop breathing 😭"
+];
+
+function noClicked() {
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+
+  noClicks++;
+
+  yesBtn.style.transform = `scale(${1 + noClicks * 0.15})`;
+  noBtn.style.transform = `scale(${1 - noClicks * 0.08})`;
+
+  if (noClicks <= noTexts.length) {
+    noBtn.innerText = noTexts[noClicks - 1];
+  }
+
+  if (noClicks === noTexts.length) {
+    noBtn.style.display = "none";
+    yesBtn.innerText = "YES ❤️";
+    yesBtn.className = "big-heart";
+    yesBtn.style.transform = "scale(1.6)";
+  }
+}
+
+function yesClicked() {
+  document.getElementById("main").innerHTML = `
+    <div class="final">
+      🧸💋🧸<br><br>
+      YAYYYY I LOVE YOU MORE 💕
+    </div>
+  `;
+}
+
+/* Create floating hearts */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 7000);
+}, 500);
+</script>
+
+</body>
+</html>
